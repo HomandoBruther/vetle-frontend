@@ -1,0 +1,49 @@
+<section class="page">
+  <header class="page-header">
+    <h1>Projects</h1>
+    <p class="lead">Things I have built, served from my own API.</p>
+  </header>
+
+  @if (projects.isLoading()) {
+    <p class="status" role="status">Loading projects…</p>
+  } @else if (projects.error()) {
+    <div class="status error" role="alert">
+      <p>Could not load projects. Is the API running?</p>
+      <button type="button" (click)="projects.reload()">Try again</button>
+    </div>
+  } @else if (projects.hasValue()) {
+    @let list = projects.value();
+    @if (list.length === 0) {
+      <p class="status">No projects yet.</p>
+    } @else {
+      <ul class="grid">
+        @for (project of list; track project.id) {
+          <li class="card">
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.description }}</p>
+
+            @if (project.tags.length) {
+              <ul class="tags" aria-label="Tags">
+                @for (tag of project.tags; track tag) {
+                  <li>{{ tag }}</li>
+                }
+              </ul>
+            }
+
+            <footer>
+              <time [attr.datetime]="project.createdAt">{{ project.createdAt | date: 'mediumDate' }}</time>
+              <span class="links">
+                @if (project.repositoryUrl) {
+                  <a [href]="project.repositoryUrl" target="_blank" rel="noopener">Code</a>
+                }
+                @if (project.liveUrl) {
+                  <a [href]="project.liveUrl" target="_blank" rel="noopener">Live</a>
+                }
+              </span>
+            </footer>
+          </li>
+        }
+      </ul>
+    }
+  }
+</section>

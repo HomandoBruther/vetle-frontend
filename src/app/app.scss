@@ -1,0 +1,49 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1rem;
+  }
+
+  ul {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    color: var(--text-muted);
+    text-decoration: none;
+
+    &:hover,
+    &.active {
+      color: var(--text);
+    }
+  }
+
+  .brand {
+    font-weight: 700;
+    color: var(--text);
+  }
+}
+
+main {
+  flex: 1;
+  padding-block: 2rem;
+}
+
+.site-footer {
+  padding-block: 2rem;
+  color: var(--text-muted);
+}
