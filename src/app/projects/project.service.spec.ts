@@ -14,7 +14,9 @@ describe('ProjectService', () => {
   const sample: Project = {
     id: '6b055a63943a69f30e163347',
     title: 'Test',
+    summary: 'Short',
     description: 'A test project',
+    period: '2025',
     tags: ['angular'],
     repositoryUrl: null,
     liveUrl: null,

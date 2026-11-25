@@ -1,6 +1,8 @@
 ﻿import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { Project } from '../project.model';
 import { ProjectsPage } from './projects-page';
 
 // The page is tested through its rendered HTML, the way a user sees it,
@@ -8,10 +10,23 @@ import { ProjectsPage } from './projects-page';
 describe('ProjectsPage', () => {
   let http: HttpTestingController;
 
+  const project = (overrides: Partial<Project>): Project => ({
+    id: '1',
+    title: 'Title',
+    summary: null,
+    description: 'Description',
+    period: null,
+    tags: [],
+    repositoryUrl: null,
+    liveUrl: null,
+    createdAt: '2026-01-01T00:00:00Z',
+    ...overrides,
+  });
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ProjectsPage],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])],
     });
     http = TestBed.inject(HttpTestingController);
   });
@@ -30,25 +45,42 @@ describe('ProjectsPage', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('shows a loading message while the request is pending', async () => {
+  it('shows a loading message while the request is pending', () => {
     const fixture = render();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.textContent).toContain('Loading projects');
     http.expectOne('/api/projects'); // leave it unanswered
   });
 
-  it('renders one card per project', async () => {
+  it('renders one card per project, linking to its detail page', async () => {
     const fixture = render();
     const el = await answer(fixture, () =>
       http.expectOne('/api/projects').flush([
-        { id: '1', title: 'First', description: 'd', tags: ['a'], repositoryUrl: null, liveUrl: null, createdAt: '2026-01-01T00:00:00Z' },
-        { id: '2', title: 'Second', description: 'd', tags: [], repositoryUrl: 'https://github.com/x/y', liveUrl: null, createdAt: '2026-01-02T00:00:00Z' },
+        project({ id: 'a1', title: 'First', tags: ['x'] }),
+        project({ id: 'b2', title: 'Second', repositoryUrl: 'https://github.com/x/y' }),
       ]),
     );
 
     const titles = [...el.querySelectorAll('.card h2')].map((h) => h.textContent?.trim());
     expect(titles).toEqual(['First', 'Second']);
+    expect(el.querySelector('.card h2 a')?.getAttribute('href')).toBe('/projects/a1');
     expect(el.querySelector('a[href="https://github.com/x/y"]')).not.toBeNull();
+  });
+
+  it('shows the summary and period when present, else falls back to the description', async () => {
+    const fixture = render();
+    const el = await answer(fixture, () =>
+      http.expectOne('/api/projects').flush([
+        project({ id: 'a', summary: 'Short summary', description: 'Long text', period: '2025' }),
+        project({ id: 'b', summary: null, description: 'Only a description' }),
+      ]),
+    );
+
+    const cards = el.querySelectorAll('.card');
+    expect(cards[0].querySelector('.summary')?.textContent).toContain('Short summary');
+    expect(cards[0].querySelector('.period')?.textContent).toContain('2025');
+    expect(cards[1].querySelector('.summary')?.textContent).toContain('Only a description');
+    expect(cards[1].querySelector('.period')).toBeNull();
   });
 
   it('shows an empty state when there are no projects', async () => {

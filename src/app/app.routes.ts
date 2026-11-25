@@ -14,6 +14,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./projects/projects-page/projects-page').then((m) => m.ProjectsPage),
   },
+  {
+    // :id is a route parameter. It reaches ProjectDetailPage's `id` input automatically.
+    path: 'projects/:id',
+    title: 'Project | Vetle',
+    loadComponent: () =>
+      import('./projects/project-detail-page/project-detail-page').then((m) => m.ProjectDetailPage),
+  },
   // Any unknown URL goes back to the home page.
   { path: '**', redirectTo: '' },
 ];

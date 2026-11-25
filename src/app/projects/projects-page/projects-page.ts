@@ -1,11 +1,11 @@
-import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-projects-page',
-  imports: [DatePipe],
+  imports: [RouterLink],
   templateUrl: './projects-page.html',
   styleUrl: './projects-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

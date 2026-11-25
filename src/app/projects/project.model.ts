@@ -5,18 +5,24 @@
 export interface Project {
   id: string;
   title: string;
+  /** Short text for the card. May be null on older projects; fall back to `description`. */
+  summary: string | null;
   description: string;
+  /** When the project happened, e.g. "2025" or "2024 – present". */
+  period: string | null;
   tags: string[];
   repositoryUrl: string | null;
   liveUrl: string | null;
-  /** ISO 8601 string. JSON has no date type, so it arrives as text. */
+  /** When the record was added to the database (ISO 8601). Used for sorting, not shown. */
   createdAt: string;
 }
 
 /** What POST and PUT /api/projects expect. */
 export interface ProjectRequest {
   title: string;
+  summary?: string | null;
   description: string;
+  period?: string | null;
   tags?: string[];
   repositoryUrl?: string | null;
   liveUrl?: string | null;
