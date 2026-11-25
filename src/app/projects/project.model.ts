@@ -10,6 +10,8 @@ export interface Project {
   description: string;
   /** When the project happened, e.g. "2025" or "2024 – present". */
   period: string | null;
+  /** Thumbnail, usually "/images/projects/<file>" from public/images/projects. */
+  imageUrl: string | null;
   tags: string[];
   repositoryUrl: string | null;
   liveUrl: string | null;
@@ -23,6 +25,7 @@ export interface ProjectRequest {
   summary?: string | null;
   description: string;
   period?: string | null;
+  imageUrl?: string | null;
   tags?: string[];
   repositoryUrl?: string | null;
   liveUrl?: string | null;

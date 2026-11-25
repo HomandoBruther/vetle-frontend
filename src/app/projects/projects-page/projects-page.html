@@ -1,7 +1,8 @@
 <section class="page">
   <header class="page-header">
-    <h1>Projects</h1>
-    <p class="lead">Things I have built, served from my own API.</p>
+    <span class="eyebrow">Portfolio</span>
+    <h1>Selected <span class="gradient-text">projects</span></h1>
+    <p class="lead">From data platforms and AI agents to web apps and a Unity game.</p>
   </header>
 
   @if (projects.isLoading()) {
@@ -18,36 +19,7 @@
     } @else {
       <ul class="grid">
         @for (project of list; track project.id) {
-          <li class="card">
-            @if (project.period) {
-              <span class="period">{{ project.period }}</span>
-            }
-            <h2>
-              <a class="stretched" [routerLink]="['/projects', project.id]">{{ project.title }}</a>
-            </h2>
-            <!-- Older projects have no summary yet, so fall back to the (clamped) description. -->
-            <p class="summary">{{ project.summary ?? project.description }}</p>
-
-            @if (project.tags.length) {
-              <ul class="tags" aria-label="Tags">
-                @for (tag of project.tags; track tag) {
-                  <li>{{ tag }}</li>
-                }
-              </ul>
-            }
-
-            <footer>
-              <span class="read-more" aria-hidden="true">Read more →</span>
-              <span class="links">
-                @if (project.repositoryUrl) {
-                  <a [href]="project.repositoryUrl" target="_blank" rel="noopener">Code</a>
-                }
-                @if (project.liveUrl) {
-                  <a [href]="project.liveUrl" target="_blank" rel="noopener">Live</a>
-                }
-              </span>
-            </footer>
-          </li>
+          <li><app-project-card [project]="project" /></li>
         }
       </ul>
     }

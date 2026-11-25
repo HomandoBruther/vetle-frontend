@@ -1,34 +1,38 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { ProjectCard } from '../projects/project-card/project-card';
+import { ProjectService } from '../projects/project.service';
 
 @Component({
   selector: 'app-home-page',
-  imports: [RouterLink],
-  // The template is small enough to keep inline. Bigger templates go in their own .html file.
-  template: `
-    <section class="hero">
-      <h1>Hi, I'm Vetle.</h1>
-      <p class="lead">
-        This is my personal site, built with Angular on the frontend and ASP.NET Core with MongoDB
-        on the backend.
-      </p>
-      <a class="button" routerLink="/projects">See my projects</a>
-    </section>
-  `,
-  styles: `
-    .hero {
-      padding: 4rem 0;
-    }
-    h1 {
-      font-size: clamp(2rem, 6vw, 3.5rem);
-      margin: 0 0 1rem;
-    }
-    .lead {
-      max-width: 40rem;
-      font-size: 1.15rem;
-      color: var(--text-muted);
-    }
-  `,
+  imports: [RouterLink, ProjectCard],
+  templateUrl: './home-page.html',
+  styleUrl: './home-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePage {}
+export class HomePage {
+  private readonly projectService = inject(ProjectService);
+
+  /** Technologies from the projects, shown as a strip under the hero. */
+  protected readonly stack = [
+    'Angular',
+    'TypeScript',
+    '.NET / C#',
+    'Python',
+    'PySpark',
+    'MongoDB',
+    'Microsoft Fabric',
+    'Azure',
+    'Unity',
+  ];
+
+  private readonly projects = rxResource({
+    stream: () => this.projectService.getAll(),
+  });
+
+  /** The three newest projects (the API already sorts newest first). */
+  protected readonly featured = computed(() =>
+    this.projects.hasValue() ? this.projects.value().slice(0, 3) : [],
+  );
+}

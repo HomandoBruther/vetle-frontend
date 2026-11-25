@@ -16,6 +16,7 @@ describe('ProjectsPage', () => {
     summary: null,
     description: 'Description',
     period: null,
+    imageUrl: null,
     tags: [],
     repositoryUrl: null,
     liveUrl: null,
@@ -61,9 +62,9 @@ describe('ProjectsPage', () => {
       ]),
     );
 
-    const titles = [...el.querySelectorAll('.card h2')].map((h) => h.textContent?.trim());
+    const titles = [...el.querySelectorAll('.card h3')].map((h) => h.textContent?.trim());
     expect(titles).toEqual(['First', 'Second']);
-    expect(el.querySelector('.card h2 a')?.getAttribute('href')).toBe('/projects/a1');
+    expect(el.querySelector('.card h3 a')?.getAttribute('href')).toBe('/projects/a1');
     expect(el.querySelector('a[href="https://github.com/x/y"]')).not.toBeNull();
   });
 

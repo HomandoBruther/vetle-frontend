@@ -2,11 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { ProjectThumbnail } from '../project-thumbnail/project-thumbnail';
 import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-project-detail-page',
-  imports: [RouterLink],
+  imports: [RouterLink, ProjectThumbnail],
   templateUrl: './project-detail-page.html',
   styleUrl: './project-detail-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,6 +1,9 @@
 <header class="site-header">
-  <nav class="container">
-    <a class="brand" routerLink="/">Vetle</a>
+  <nav class="container" aria-label="Main">
+    <a class="brand" routerLink="/">
+      <span class="mark" aria-hidden="true">V</span>
+      Vetle
+    </a>
     <ul>
       <li>
         <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
@@ -14,6 +17,9 @@
   <router-outlet />
 </main>
 
-<footer class="site-footer container">
-  <small>© {{ year }} Vetle</small>
+<footer class="site-footer">
+  <div class="container">
+    <small>© {{ year }} Vetle · Built with Angular, ASP.NET Core &amp; MongoDB</small>
+    <a href="https://github.com/HomandoBruther" target="_blank" rel="noopener">GitHub</a>
+  </div>
 </footer>

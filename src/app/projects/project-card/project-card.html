@@ -1,0 +1,37 @@
+@let p = project();
+<article class="card">
+  <app-project-thumbnail [title]="p.title" [imageUrl]="p.imageUrl" />
+
+  <div class="body">
+    @if (p.period) {
+      <span class="period">{{ p.period }}</span>
+    }
+    <h3>
+      <a class="stretched" [routerLink]="['/projects', p.id]">{{ p.title }}</a>
+    </h3>
+    <!-- Older projects have no summary yet, so fall back to the (clamped) description. -->
+    <p class="summary">{{ p.summary ?? p.description }}</p>
+
+    @if (p.tags.length) {
+      <ul class="tags" aria-label="Tags">
+        @for (tag of p.tags; track tag) {
+          <li>{{ tag }}</li>
+        }
+      </ul>
+    }
+
+    <footer>
+      <span class="read-more" aria-hidden="true">Read more <span class="arrow">→</span></span>
+      @if (p.repositoryUrl || p.liveUrl) {
+        <span class="links">
+          @if (p.repositoryUrl) {
+            <a [href]="p.repositoryUrl" target="_blank" rel="noopener">Code</a>
+          }
+          @if (p.liveUrl) {
+            <a [href]="p.liveUrl" target="_blank" rel="noopener">Live</a>
+          }
+        </span>
+      }
+    </footer>
+  </div>
+</article>

@@ -26,10 +26,15 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "ignore": ["**/README.md"]
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "node_modules/@fontsource-variable/inter/index.css",
+              "node_modules/@fontsource-variable/space-grotesk/index.css",
+              "src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {

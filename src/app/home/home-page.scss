@@ -1,0 +1,106 @@
+.hero {
+  position: relative;
+  padding: 4.5rem 0 3.5rem;
+
+  h1 {
+    margin: 1.25rem 0 1.25rem;
+    font-size: clamp(2.25rem, 6.5vw, 4.25rem);
+  }
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--teal) 25%, transparent);
+}
+
+.lead {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.15rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+// Blurred colour blobs behind the hero text. z-index -1 keeps them behind,
+// pointer-events none makes sure they never block clicks.
+.orb {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.orb-1 {
+  top: 2rem;
+  right: 4%;
+  width: 18rem;
+  height: 18rem;
+  background: var(--violet);
+}
+
+.orb-2 {
+  top: 11rem;
+  right: 18%;
+  width: 12rem;
+  height: 12rem;
+  background: var(--coral);
+}
+
+.stack ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 1.25rem 0;
+  border-block: 1px solid var(--border);
+  list-style: none;
+
+  li {
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}
+
+.featured {
+  padding: 3.5rem 0 1rem;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.75rem;
+  }
+
+  header a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  list-style: none;
+}

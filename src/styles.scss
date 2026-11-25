@@ -1,30 +1,52 @@
-// Global styles. Design tokens live here as CSS custom properties, so every
-// component uses the same colours and dark mode only has to change them in one place.
+// Global styles.
+// Design tokens live here as CSS custom properties: every component uses the same colours,
+// spacing and fonts, and dark mode only has to redefine the tokens in one place.
+// Shared building blocks (.button, .tags, .status, ...) are also here, so components don't
+// each carry their own copy.
 
 :root {
-  --bg: #fafafa;
+  // Brand: violet -> coral, with teal as a secondary accent.
+  --violet: #6d5efc;
+  --coral: #ff7a59;
+  --teal: #0fb5a6;
+  --gradient: linear-gradient(120deg, var(--violet), #b65cf0 50%, var(--coral));
+
+  --bg: #f7f6fb;
   --surface: #ffffff;
-  --text: #1a1a1a;
-  --text-muted: #5f6368;
-  --border: #e3e3e3;
-  --accent: #2563eb;
-  --accent-soft: #e8efff;
+  --surface-2: #f0eef9;
+  --text: #17151f;
+  --text-muted: #5e5a6e;
+  --border: #e4e1ef;
+  --accent: #5b4bf0;
+  --accent-soft: #ebe8ff;
   --danger: #c62828;
-  --radius: 12px;
+  --glow: rgb(109 94 252 / 18%);
+
+  --radius: 14px;
+  --radius-lg: 22px;
+  --shadow: 0 1px 2px rgb(23 21 31 / 6%), 0 8px 24px rgb(23 21 31 / 6%);
+  --shadow-hover: 0 2px 4px rgb(23 21 31 / 8%), 0 16px 40px rgb(91 75 240 / 18%);
+
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk Variable', var(--font-body);
 
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #111214;
-    --surface: #1a1c1f;
-    --text: #ececec;
-    --text-muted: #a0a4ab;
-    --border: #2c2f34;
-    --accent: #7aa2ff;
-    --accent-soft: #1e2a47;
+    --bg: #0e0d14;
+    --surface: #17151f;
+    --surface-2: #1f1c2b;
+    --text: #efedf7;
+    --text-muted: #a7a2bb;
+    --border: #2a2638;
+    --accent: #9d93ff;
+    --accent-soft: #252047;
     --danger: #ff6b6b;
+    --glow: rgb(109 94 252 / 28%);
+    --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 8px 24px rgb(0 0 0 / 25%);
+    --shadow-hover: 0 2px 4px rgb(0 0 0 / 30%), 0 16px 40px rgb(109 94 252 / 25%);
   }
 }
 
@@ -36,32 +58,133 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  // A soft violet glow at the top of every page gives depth without an image.
+  background:
+    radial-gradient(60rem 30rem at 15% -10%, var(--glow), transparent 70%),
+    radial-gradient(40rem 24rem at 95% 0%, rgb(255 122 89 / 10%), transparent 70%),
+    var(--bg);
+  background-repeat: no-repeat;
   color: var(--text);
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.6;
+  font-family: var(--font-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 a {
   color: var(--accent);
 }
 
+// Visible focus ring for keyboard users only (not on mouse click).
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
 .container {
   width: 100%;
-  max-width: 64rem;
+  max-width: 68rem;
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: 1.25rem;
+}
+
+// ---------- Shared building blocks ----------
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
 .button,
 button {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.3rem;
   border: none;
-  border-radius: var(--radius);
-  background: var(--accent);
+  border-radius: 999px;
+  background: var(--gradient);
   color: #fff;
   font: inherit;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  box-shadow: 0 6px 20px rgb(109 94 252 / 30%);
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgb(109 94 252 / 40%);
+  }
+
+  &.ghost {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: none;
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.15rem 0.65rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+}
+
+.status {
+  padding: 1.5rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+
+  &.error {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+}
+
+// Respect the OS "reduce motion" setting: no hover lifts or transitions.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

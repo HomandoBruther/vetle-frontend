@@ -1,0 +1,43 @@
+<section class="hero">
+  <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Angular · .NET · Data</span>
+  <h1>
+    Hi, I'm Vetle.<br />
+    I build <span class="gradient-text">web apps &amp; data platforms</span>.
+  </h1>
+  <p class="lead">
+    From Angular frontends and .NET APIs to PySpark pipelines and AI agents. This site is one of
+    them: Angular on the front, ASP.NET Core and MongoDB behind it.
+  </p>
+  <div class="actions">
+    <a class="button" routerLink="/projects">See my projects</a>
+    <a class="button ghost" href="https://github.com/HomandoBruther" target="_blank" rel="noopener">
+      GitHub
+    </a>
+  </div>
+
+  <!-- Decorative shapes only, so they're hidden from screen readers. -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+</section>
+
+<section class="stack" aria-label="Technologies I work with">
+  <ul>
+    @for (tech of stack; track tech) {
+      <li>{{ tech }}</li>
+    }
+  </ul>
+</section>
+
+@if (featured().length) {
+  <section class="featured">
+    <header>
+      <h2>Recent work</h2>
+      <a routerLink="/projects">All projects →</a>
+    </header>
+    <ul class="grid">
+      @for (project of featured(); track project.id) {
+        <li><app-project-card [project]="project" /></li>
+      }
+    </ul>
+  </section>
+}

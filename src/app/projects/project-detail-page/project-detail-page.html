@@ -25,25 +25,33 @@
       }
     </header>
 
-    <p class="description">{{ p.description }}</p>
+    <!-- priority: this banner is the main image above the fold, so load it right away. -->
+    <app-project-thumbnail class="banner" [title]="p.title" [imageUrl]="p.imageUrl" [priority]="true" />
 
-    @if (p.tags.length) {
-      <ul class="tags" aria-label="Tags">
-        @for (tag of p.tags; track tag) {
-          <li>{{ tag }}</li>
-        }
-      </ul>
-    }
+    <div class="content">
+      <p class="description">{{ p.description }}</p>
 
-    @if (p.repositoryUrl || p.liveUrl) {
-      <p class="actions">
-        @if (p.repositoryUrl) {
-          <a class="button" [href]="p.repositoryUrl" target="_blank" rel="noopener">View code</a>
+      <aside>
+        @if (p.tags.length) {
+          <h2>Tech</h2>
+          <ul class="tags" aria-label="Tags">
+            @for (tag of p.tags; track tag) {
+              <li>{{ tag }}</li>
+            }
+          </ul>
         }
-        @if (p.liveUrl) {
-          <a class="button" [href]="p.liveUrl" target="_blank" rel="noopener">Live site</a>
+
+        @if (p.repositoryUrl || p.liveUrl) {
+          <div class="actions">
+            @if (p.repositoryUrl) {
+              <a class="button" [href]="p.repositoryUrl" target="_blank" rel="noopener">View code</a>
+            }
+            @if (p.liveUrl) {
+              <a class="button ghost" [href]="p.liveUrl" target="_blank" rel="noopener">Live site</a>
+            }
+          </div>
         }
-      </p>
-    }
+      </aside>
+    </div>
   </article>
 }

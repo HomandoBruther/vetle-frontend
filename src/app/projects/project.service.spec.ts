@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http';
+﻿import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
@@ -17,6 +17,7 @@ describe('ProjectService', () => {
     summary: 'Short',
     description: 'A test project',
     period: '2025',
+    imageUrl: null,
     tags: ['angular'],
     repositoryUrl: null,
     liveUrl: null,

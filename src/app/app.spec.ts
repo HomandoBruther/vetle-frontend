@@ -15,12 +15,13 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render navigation links', async () => {
+  it('should render the brand and navigation links', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    const links = [...(fixture.nativeElement as HTMLElement).querySelectorAll('nav a')].map((a) =>
-      a.textContent?.trim(),
-    );
-    expect(links).toEqual(['Vetle', 'Home', 'Projects']);
+    const el = fixture.nativeElement as HTMLElement;
+
+    expect(el.querySelector('.brand')?.textContent).toContain('Vetle');
+    const links = [...el.querySelectorAll('nav ul a')].map((a) => a.textContent?.trim());
+    expect(links).toEqual(['Home', 'Projects']);
   });
 });

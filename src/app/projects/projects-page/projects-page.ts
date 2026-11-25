@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { ProjectCard } from '../project-card/project-card';
 import { ProjectService } from '../project.service';
 
+/**
+ * A "container" (smart) component: it fetches the data and handles loading/error states,
+ * then hands each project to the presentational ProjectCard.
+ */
 @Component({
   selector: 'app-projects-page',
-  imports: [RouterLink],
+  imports: [ProjectCard],
   templateUrl: './projects-page.html',
   styleUrl: './projects-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

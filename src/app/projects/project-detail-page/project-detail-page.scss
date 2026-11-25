@@ -1,12 +1,13 @@
 :host {
   display: block;
-  max-width: 44rem;
+  max-width: 56rem;
 }
 
 .back {
   display: inline-block;
   margin-bottom: 2rem;
   color: var(--text-muted);
+  font-weight: 500;
   text-decoration: none;
 
   &:hover {
@@ -15,57 +16,61 @@
 }
 
 h1 {
-  margin: 0.25rem 0 0.75rem;
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  line-height: 1.2;
+  margin: 0.4rem 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
 .period {
-  color: var(--text-muted);
-  font-size: 0.9rem;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .lead {
-  font-size: 1.15rem;
+  max-width: 44rem;
+  margin: 0;
   color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+.banner {
+  margin: 2rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+// Two columns on wide screens (text + sidebar), one column on phones.
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15rem;
+  gap: 2.5rem;
+
+  @media (width < 48rem) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .description {
+  margin: 0;
+  font-size: 1.05rem;
   // Keeps line breaks typed in the description, so paragraphs stay paragraphs.
   white-space: pre-line;
-  margin: 2rem 0;
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 0;
-  list-style: none;
-
-  li {
-    padding: 0.15rem 0.6rem;
-    border-radius: 999px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    font-size: 0.8rem;
-  }
+aside h2 {
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 2rem;
-}
-
-.status {
-  padding: 1.5rem;
-  border: 1px dashed var(--border);
-  border-radius: var(--radius);
-  color: var(--text-muted);
-
-  &.error {
-    border-color: var(--danger);
-    color: var(--danger);
-  }
+  margin-top: 1.75rem;
 }
